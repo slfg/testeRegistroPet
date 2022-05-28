@@ -16,11 +16,11 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-native": "0.68.2",
-    "react-native-image-picker": "^4.8.3",
     "react-native-paper": "^4.12.1",
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.7",
-    "webpack-dev-server": "~3.11.0"
+    "webpack-dev-server": "~3.11.0",
+    "expo-image-picker": "~13.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

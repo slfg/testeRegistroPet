@@ -1,16 +1,10 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { Card, Title, Button, ToggleButton, TextInput, Text, List, Surface, RadioButton } from "react-native-paper";
+import { Card, Title, Button, ToggleButton, TextInput, Text, List, Surface, Avatar } from "react-native-paper";
 import { View, StyleSheet, Image } from "react-native";
-import ImagePicker from "react-native-image-picker";
+import * as ImagePicker from "expo-image-picker";
 
 const RegistroPet = () => {
-
-	const imageUpload = () => {
-		ImagePicker.launchImageLibrary({}, response => {
-			console.log("Response = ");
-		})
-	};
 
 	const [nome, setNome] = React.useState("");
 	const [localizacao, setLocalizacao] = React.useState("");
@@ -30,6 +24,17 @@ const RegistroPet = () => {
 
 	const [expanded, setExpanded] = React.useState(true);
 	const handlePress = () => setExpanded(!expanded);
+
+	const pegarImagem = async () => {
+		let result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			allowsEditing: true,
+			aspect: [4, 3],
+		});
+		if (!result.cancelled) {
+			setFoto(result.uri);
+		}
+	};
 
 	const theme = {
 		colors: {
@@ -77,15 +82,17 @@ const RegistroPet = () => {
 						textAlign: "center"
 					}} />
 					<Card.Content>
-						<Button icon="camera" mode="text" onPress={imageUpload} theme={theme}
+						<Button icon="camera" mode="text" theme={theme} onPress={pegarImagem}
 							style={{
 								margin: 10,
 								marginBottom: 10,
 								width: "100%",
-								// size big
 								fontSize: 118,
 							}}
 						/>
+						{foto ? <View style={container.elementscenter}>
+						<Avatar.Image size={120} source={{ uri: foto }} /> </View> : null}
+						 
 						<TextInput label="Nome*"
 							theme={theme}
 							style={container.elements}
