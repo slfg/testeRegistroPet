@@ -6,16 +6,7 @@ import RegistroPet from "./screens/registropet";
 export default function App() {
 	return (
 		<PaperProvider>
-			<RegistroPet />
+			<RegistroPet/>
 		</PaperProvider>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-});
