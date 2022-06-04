@@ -1,13 +1,13 @@
 import * as React from "react";
-import { SafeAreaView, TouchableOpacity } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { Card, Title, Button, ToggleButton, TextInput, Text, List, Surface, Avatar } from "react-native-paper";
 import { View, StyleSheet, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+/* import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'; */
 
-function RegistroPet ({ navigation }) {
-
+function RegistroPet () {
+	
 	const [nome, setNome] = React.useState("");
 	const [localizacao, setLocalizacao] = React.useState("");
 	const [sexo, setSexo] = React.useState("");
@@ -38,6 +38,12 @@ function RegistroPet ({ navigation }) {
 		}
 	};
 
+	const scrollView = StyleSheet.create({
+		container: {
+			flex: 1,
+		},
+	});
+
 	const theme = {
 		colors: {
 			primary: 'orange',
@@ -49,8 +55,8 @@ function RegistroPet ({ navigation }) {
 		content: {
 			display: "flex",
 			flex: 1,
-			justifyContent: "center",
 			alignItems: "center",
+			justifyContent: "center",
 			flexDirection: "row",
 			backgroundColor: 'black',
 		},
@@ -70,13 +76,18 @@ function RegistroPet ({ navigation }) {
 			alignItems: "center",
 			justifyContent: "center",
 			textAlign: "center"
-		}
+		},
+		card : {
+			alignItems: "center",
+			justifyContent: "center",
+		},
 	});
 
 	return (
-		<SafeAreaView style={container.content}>
-			<View style={container.view}>
+		<SafeAreaView style={scrollView.container}>
+			<ScrollView>
 				<Card
+					style={container.card}
 					theme={theme}>
 					<Card.Title title="Registro do pet" titleStyle={{
 						fontSize: 20,
@@ -293,7 +304,7 @@ function RegistroPet ({ navigation }) {
 						</View>
 					</Card.Actions>
 				</Card>
-			</View>
+			</ScrollView>
 		</SafeAreaView>
 	);
 }
