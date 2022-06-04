@@ -1,19 +1,23 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { Card, Title, Button, ToggleButton, TextInput, Text, List, Surface, RadioButton } from "react-native-paper";
+import { Card, Title, Button, ToggleButton, TextInput, Text, List } from "react-native-paper";
 import { View, StyleSheet, Image } from "react-native";
-import ImagePicker from "react-native-image-picker";
+import * as ImagePicker from "expo-image-picker";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const RegistroPessoa = () => {
+const RegistroPessoa = ({ navigation }) => {
 
 	const imageUpload = () => {
 		ImagePicker.launchImageLibrary({}, response => {
 			console.log("Response = ", response);
-		})};
-	
-	const [tppessoa, seTtppessoa] = React.useState("");
+		})
+	};
+
+	const [tipopessoa, seTipoppessoa] = React.useState("");
 	const [nome, setNome] = React.useState("");
-	const [cp, setCpf] = React.useState("");
+	const [cpf, setCpf] = React.useState("");
+	const [cnpj, setCnpj] = React.useState("");
 	const [email, setEmail] = React.useState("");
 	const [senha, setSenha] = React.useState("");
 	const [confirmarsenha, setConfirmarsenha] = React.useState("");
@@ -39,10 +43,11 @@ const RegistroPessoa = () => {
 			flexDirection: "row",
 			backgroundColor: 'black',
 		},
-		elements:{
+		elements: {
 			margin: 10,
+
 		},
-		elementscenter:{
+		elementscenter: {
 			margin: 5,
 			marginBottom: 10,
 			alignItems: "center",
@@ -54,41 +59,73 @@ const RegistroPessoa = () => {
 			marginBottom: 10,
 			alignItems: "center",
 			justifyContent: "center",
-			textAlign: "center" 
+			textAlign: "center"
 		}
 	});
 
 	return (
 		<SafeAreaView style={container.content}>
 			<View style={container.view}>
-			<Card
-				theme={theme}>
-				<Card.Title title="Registro do pet" titleStyle={{
-					fontSize: 20,
-					color: 'orange',
-					textAlign: "center"
-				}} />
-				<Card.Content>
-					<Button icon="camera" mode="text" onPress={imageUpload} theme={theme}
-					style={{
-						margin: 10,
-						marginBottom: 10,
-						width: "100%",
-						// size big
-						fontSize: 118,
-					}}
-					/>
-					<TextInput label="Nome*"
-						theme={theme}
-						style={container.elements}
-						value={nome}
-						onChangeText={nome => setNome(nome)} />
-					<TextInput label="Localização*"
-						value={localizacao}
-						style={container.elements}
-						theme={theme}
-						onChangeText={localizacao => setLocalizacao(localizacao)} />
-					<Text style={container.text}>Sexo*</Text>
+				<Card
+					theme={theme}>
+					<Card.Title title="Registro do Usuário" titleStyle={{
+						fontSize: 20,
+						color: 'orange',
+						textAlign: "center"
+					}} />
+					<Card.Content>
+						<List.Section>
+							<List.Accordion
+								title={tipopessoa === "" ? "Tipo de pessoa" : tipopessoa}
+								left={props => <List.Icon {...props} icon="account-multiple" />}
+								expanded={expanded}
+								onPress={handlePress}
+								theme={theme}
+							>
+								<List.Item
+									title="Pessoa Física"
+									left={props => <List.Icon {...props} icon="account" />}
+									onPress={() => seTipoppessoa("Pessoa física")}
+								/>
+								<List.Item
+									title="Pessoa Jurídica"
+									left={props => <List.Icon {...props} icon="account-multiple" />}
+									onPress={() => seTipoppessoa("Pessoa jurídica")}
+								/>
+							</List.Accordion>
+						</List.Section>
+						{tipopessoa === "Pessoa física" && (
+							<>
+								<TextInput
+									label="CPF"
+									value={cpf}
+									onChangeText={setCpf}
+									theme={theme}
+									style={container.elements}
+								/>
+							</>)
+						}
+						{tipopessoa === "Pessoa jurídica" && (
+							<>
+								<TextInput
+									label="CNPJ"
+									value={cnpj}
+									onChangeText={setCnpj}
+									theme={theme}
+									style={container.elements}
+								/>
+							</>)}
+						<TextInput label="Nome*"
+							theme={theme}
+							style={container.elements}
+							value={nome}
+							onChangeText={nome => setNome(nome)} />
+						<TextInput label="Endereço*"
+							value={endereco}
+							style={container.elements}
+							theme={theme}
+							onChangeText={endereco => setEndereco(endereco)} />
+						{/* /* <Text style={container.text}>Sexo*</Text>
 					<ToggleButton.Row
 						style={container.elementscenter}
 						onValueChange={value => setSexo(value)}
@@ -104,8 +141,8 @@ const RegistroPessoa = () => {
 							icon="gender-female"
 							value="Fêmea"
 						/>
-					</ToggleButton.Row>
-					<List.Accordion
+					</ToggleButton.Row> */}
+						{/* <List.Accordion
 						title={raca}
 						theme={theme}
 						style={container.elements}
@@ -119,8 +156,8 @@ const RegistroPessoa = () => {
 							} />
 						<List.Item title="Poodle"
 							onPress={() => setRaca("Poodle")} />
-					</List.Accordion>
-					<View style={{ flexDirection: "row" }}>
+					</List.Accordion> */}
+						{/* <View style={{ flexDirection: "row" }}>
 						<View style={{ flex: 1 }}>
 							<TextInput label="Anos"
 						style={container.elements}
@@ -135,8 +172,8 @@ const RegistroPessoa = () => {
 								theme={theme}
 								onChangeText={meses => setMeses(meses)} />
 						</View>
-					</View>
-					<List.Accordion
+					</View> */}
+						{/* <List.Accordion
 						title={peso}
 						style={container.elements}
 						theme={theme}
@@ -193,8 +230,8 @@ const RegistroPessoa = () => {
 							icon="close"
 							value="false"
 						/>
-					</ToggleButton.Row>
-					<List.Accordion
+					</ToggleButton.Row> */}
+						{/* <List.Accordion
 						title={tipo}
 						style={container.elements}
 						theme={theme}
@@ -205,29 +242,39 @@ const RegistroPessoa = () => {
 							onPress={() => setTipo("Gato")} />
 						<List.Item title="Coelho"
 							onPress={() => setTipo("Coelho")} />
-					</List.Accordion>
-					<TextInput label="Telefone" theme={theme}
-						style={container.elements}
-						value={telefone}
-						onChangeText={telefone => setTelefone(telefone)} />
-					<TextInput label="Email" theme={theme}
-						style={container.elements}
-						value={email}
-						onChangeText={email => setEmail(email)} />
-					<TextInput label="Descrição*" theme={theme} 
+					</List.Accordion> */}
+						<TextInput label="Telefone*" theme={theme}
+							style={container.elements}
+							value={telefone}
+							onChangeText={telefone => setTelefone(telefone)} />
+						<TextInput label="Email*" theme={theme}
+							style={container.elements}
+							value={email}
+							onChangeText={email => setEmail(email)} />
+						{/* <TextInput label="Descrição*" theme={theme} 
 						style={container.elements}
 						multiline={true}
 					numberOfLines={5}
 						value={descricao}
-						onChangeText={descricao => setDescricao(descricao)} />
-				</Card.Content>
-				<Card.Actions>
-					<Button mode="contained" color="orange" onPress={() => { }}>
-						Cadastrar Pessoa
-					</Button>
-				</Card.Actions>
-			</Card>
-							</View>
+						onChangeText={descricao => setDescricao(descricao)} /> */}
+						<TextInput label="Senha*" theme={theme}
+							style={container.elements}
+							secureTextEntry={true}
+							value={senha}
+							onChangeText={senha => setSenha(senha)} />
+						<TextInput label="Confirmar senha*" theme={theme}
+							style={container.elements}
+							secureTextEntry={true}
+							value={confirmarsenha}
+							onChangeText={confirmarsenha => setConfirmarsenha(confirmarsenha)} />
+					</Card.Content>
+					<Card.Actions style={container.elementscenter}>
+						<Button mode="contained" color="orange" onPress={() => { }}>
+							Cadastrar Pessoa
+						</Button>
+					</Card.Actions>
+				</Card>
+			</View>
 		</SafeAreaView>
 	);
 }

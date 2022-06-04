@@ -1,10 +1,12 @@
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Title, Button, ToggleButton, TextInput, Text, List, Surface, Avatar } from "react-native-paper";
 import { View, StyleSheet, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const RegistroPet = () => {
+function RegistroPet ({ navigation }) {
 
 	const [nome, setNome] = React.useState("");
 	const [localizacao, setLocalizacao] = React.useState("");
@@ -84,15 +86,13 @@ const RegistroPet = () => {
 					<Card.Content>
 						<Button icon="camera" mode="text" theme={theme} onPress={pegarImagem}
 							style={{
-								margin: 10,
-								marginBottom: 10,
-								width: "100%",
-								fontSize: 118,
+								fontSize: 18,
+								marginHorizontal: 130
 							}}
 						/>
 						{foto ? <View style={container.elementscenter}>
-						<Avatar.Image size={120} source={{ uri: foto }} /> </View> : null}
-						 
+							<Avatar.Image size={120} source={{ uri: foto }} /> </View> : null}
+
 						<TextInput label="Nome*"
 							theme={theme}
 							style={container.elements}
@@ -121,20 +121,74 @@ const RegistroPet = () => {
 							/>
 						</ToggleButton.Row>
 						<List.Accordion
-							title={raca}
-							theme={theme}
+							title={tipo}
 							style={container.elements}
-							left={props => <List.Icon {...props} icon="dog" />}
-						>
-							<List.Item title="Salsicha"
-								onPress={() => setRaca("Salsicha")
-								} />
-							<List.Item title="Vira-lata"
-								onPress={() => setRaca("Vira-lata")
-								} />
-							<List.Item title="Poodle"
-								onPress={() => setRaca("Poodle")} />
+							theme={theme}
+							left={props => <List.Icon {...props} icon="paw" />}>
+							<List.Item title="Cachorro"
+								onPress={() => setTipo("Cachorro")} />
+							<List.Item title="Gato"
+								onPress={() => setTipo("Gato")} />
+							<List.Item title="Coelho"
+								onPress={() => setTipo("Coelho")} />
 						</List.Accordion>
+						{tipo === "Cachorro" && (
+							<>
+								<List.Accordion
+									title={raca}
+									theme={theme}
+									style={container.elements}
+									left={props => <List.Icon {...props} icon="dog" />}
+								>
+									<List.Item title="Salsicha"
+										onPress={() => setRaca("Salsicha")
+										} />
+									<List.Item title="Vira-lata"
+										onPress={() => setRaca("Vira-lata")
+										} />
+									<List.Item title="Poodle"
+										onPress={() => setRaca("Poodle")} />
+								</List.Accordion>
+							</>
+						)}
+						{tipo === "Gato" && (
+							<>
+								<List.Accordion
+									title={raca}
+									theme={theme}
+									style={container.elements}
+									left={props => <List.Icon {...props} icon="cat" />}
+								>
+									<List.Item title="Persa"
+										onPress={() => setRaca("Persa")
+										} />
+									<List.Item title="Vira-lata"
+										onPress={() => setRaca("Vira-lata")
+										} />
+									<List.Item title="Siamês"
+										onPress={() => setRaca("Siamês")} />
+								</List.Accordion>
+							</>
+						)}
+						{tipo === "Coelho" && (
+							<>
+								<List.Accordion
+									title={raca}
+									theme={theme}
+									style={container.elements}
+									left={props => <List.Icon {...props} icon="rabbit" />}
+								>
+									<List.Item title="Angorá"
+										onPress={() => setRaca("Angorá")
+										} />
+									<List.Item title="Vira-lata"
+										onPress={() => setRaca("Vira-lata")
+										} />
+									<List.Item title="Coelho leão"
+										onPress={() => setRaca("Coelho leão")} />
+								</List.Accordion>
+							</>
+						)}
 						<View style={{ flexDirection: "row" }}>
 							<View style={{ flex: 1 }}>
 								<TextInput label="Anos"
@@ -209,18 +263,6 @@ const RegistroPet = () => {
 								value="false"
 							/>
 						</ToggleButton.Row>
-						<List.Accordion
-							title={tipo}
-							style={container.elements}
-							theme={theme}
-							left={props => <List.Icon {...props} icon="paw" />}>
-							<List.Item title="Cachorro"
-								onPress={() => setTipo("Cachorro")} />
-							<List.Item title="Gato"
-								onPress={() => setTipo("Gato")} />
-							<List.Item title="Coelho"
-								onPress={() => setTipo("Coelho")} />
-						</List.Accordion>
 						<TextInput label="Telefone" theme={theme}
 							style={container.elements}
 							value={telefone}
