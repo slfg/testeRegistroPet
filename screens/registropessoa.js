@@ -38,14 +38,13 @@ const RegistroPessoa = () => {
 		content: {
 			display: "flex",
 			flex: 1,
-			justifyContent: "center",
 			alignItems: "center",
+			justifyContent: "center",
 			flexDirection: "row",
 			backgroundColor: 'black',
 		},
 		elements: {
 			margin: 10,
-
 		},
 		elementscenter: {
 			margin: 5,
@@ -60,25 +59,26 @@ const RegistroPessoa = () => {
 			alignItems: "center",
 			justifyContent: "center",
 			textAlign: "center"
-		}
+		},
+		card : {
+			alignItems: "center",
+			justifyContent: "center",
+		},
 	});
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<ScrollView>
-				<Card
-					theme={theme}
-					style={{
-						alignItems: "center",
-						justifyContent: "center",
-					}}>
+			<Card
+					style={container.card}
+					theme={theme}>
 					<Card.Title title="Registro do usuário" titleStyle={{
 						fontSize: 20,
 						color: 'orange',
 						textAlign: "center"
 					}} />
 					<Card.Content>
-						<List.Accordion
+						{/* <List.Accordion
 							title={tipopessoa === "" ? "Tipo de pessoa" : tipopessoa}
 							left={props => <List.Icon {...props} icon="account-multiple" />}
 							expanded={expanded}
@@ -141,7 +141,12 @@ const RegistroPessoa = () => {
 					numberOfLines={5}
 						value={descricao}
 						onChangeText={descricao => setDescricao(descricao)} /> */}
-					<TextInput label="Senha*" theme={theme}
+						<TextInput label="Nome*"
+							theme={theme}
+							style={container.elements}
+							value={nome}
+							onChangeText={nome => setNome(nome)} />
+					{/* <TextInput label="Senha*" theme={theme}
 						style={container.elements}
 						secureTextEntry={true}
 						value={senha}
@@ -151,9 +156,9 @@ const RegistroPessoa = () => {
 						style={container.elements}
 						secureTextEntry={true}
 						value={confirmarsenha}
-						onChangeText={confirmarsenha => setConfirmarsenha(confirmarsenha)} />
+						onChangeText={confirmarsenha => setConfirmarsenha(confirmarsenha)} /> */}
 						</Card.Content>
-						<Card.Actions>
+					<Card.Actions>
 						<View style={{
 							display: "flex",
 							flex: 1,
@@ -165,11 +170,12 @@ const RegistroPessoa = () => {
 								mode="contained" color="orange" onPress={() => { }}>
 								Cadastrar
 							</Button>
-							</View>
-						</Card.Actions>
+						</View>
+					</Card.Actions>
 				</Card>
 			</ScrollView>
 		</SafeAreaView>
+		
 	);
 }
 
